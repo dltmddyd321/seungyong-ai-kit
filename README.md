@@ -17,7 +17,9 @@ Android 개발을 하면서 Claude Code와 Codex 같은 AI 코딩 에이전트�
 ├── harness/          스킬, 에이전트, 훅을 묶은 하네스 설명
 ├── notes/            짧은 기술 노트
 ├── hooks/            Claude Code 훅 스크립트와 설정 예시
-└── templates/        프로젝트용 AGENTS.md / CLAUDE.md 템플릿
+├── templates/        프로젝트용 AGENTS.md / CLAUDE.md 템플릿
+├── docs/             설치와 주의사항
+└── install.sh        설치 스크립트
 ```
 
 ## 목차
@@ -83,39 +85,14 @@ Android 개발을 하면서 Claude Code와 Codex 같은 AI 코딩 에이전트�
 
 ## 설치
 
-### Claude Code
-
-개인 전역으로 쓰려면 `~/.claude/` 아래에 복사하거나 심볼릭 링크를 겁니다. 링크로 두면 이 저장소를 `git pull`할 때 같이 갱신됩니다.
-
 ```bash
-KIT=~/path/to/seungyong-ai-kit
-
-mkdir -p ~/.claude/skills ~/.claude/agents ~/.claude/commands
-
-for s in "$KIT"/skills/*/; do ln -s "$s" ~/.claude/skills/"$(basename "$s")"; done
-for a in "$KIT"/agents/*.md; do ln -s "$a" ~/.claude/agents/; done
-for c in "$KIT"/commands/*.md; do ln -s "$c" ~/.claude/commands/; done
+git clone https://github.com/dltmddyd321/seungyong-ai-kit.git ~/seungyong-ai-kit
+cd ~/seungyong-ai-kit
+./install.sh --dry-run   # 바뀔 내용 확인
+./install.sh             # skills/agents/commands 링크 + rules import
 ```
 
-프로젝트 단위로 쓰려면 같은 파일을 프로젝트의 `.claude/skills`, `.claude/agents`, `.claude/commands`에 복사합니다. Android 하네스 설치 순서는 [harness/android-dev/README.md](harness/android-dev/README.md)에 있습니다.
-
-`rules/`와 `writing/`은 문서입니다. 필요한 파일을 `~/.claude/CLAUDE.md`에서 `@` import로 불러오거나, 해당 저장소의 `AGENTS.md`에 옮겨 적어 씁니다.
-
-```
-@~/path/to/seungyong-ai-kit/rules/working-style.md
-@~/path/to/seungyong-ai-kit/rules/git-commit.md
-```
-
-설치 후 바꿀 placeholder:
-- `{PROJECT_ROOT}`, `<Variant>` (스킬, 에이전트)
-- `{BASE_BRANCH}` (`/pr`, `/learn`)
-- `<OBSIDIAN_VAULT>` (`dev-memo`)
-- `<PACKAGE_NAME>`, `<QUOTA_PROJECT>` (`play-vitals-query`)
-- `config.env` (`translation-sheet/scripts`, `config.example.env`를 복사해서 작성)
-
-### Codex 등 다른 에이전트
-
-Codex는 `CLAUDE.md`가 아니라 `AGENTS.md`를 읽습니다. 프로젝트에는 [templates/AGENTS.md](templates/AGENTS.md)를 기반으로 규칙을 쓰고, `CLAUDE.md`에는 `@AGENTS.md` 한 줄만 둡니다. `rules/`의 내용도 `AGENTS.md`에 옮겨 적으면 두 에이전트가 같은 규칙을 읽습니다. `~/.claude/skills/`는 Claude Code 전용 위치라서, 다른 에이전트에서는 그 에이전트의 스킬 로딩 방식에 맞춰 따로 연결해야 합니다.
+옵션(`--with-writing`, `--codex`, `--no-rules`, `--uninstall`), 이름 충돌, 설치 후 채워야 할 값, Codex 사용법 같은 주의사항은 [docs/SETUP.md](docs/SETUP.md)에 정리했습니다. 처음 설치할 때 한 번 읽어 주세요.
 
 ## License
 
