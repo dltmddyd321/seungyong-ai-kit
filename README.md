@@ -27,13 +27,10 @@ Android 개발을 하면서 Claude Code와 Codex 같은 AI 코딩 에이전트�
 ### rules/
 | 파일 | 내용 |
 |---|---|
-| [working-style.md](rules/working-style.md) | 한국어 응답, AskUserQuestion 한글 깨짐, 추측 금지, 주석 금지, 기존 동작 보존, 빌드는 요청 시에만, 실패 시 멈춤, 파이프라인 사용 기준, worktree, 백업 파일, 인증 URL, 새 작업은 새 세션, 작업 루트, 실기기 조작 금지, 다음 단계 선택지 생략, 결과 확인 장치 먼저 |
+| [working-style.md](rules/working-style.md) | 한국어 응답, AskUserQuestion 한글 깨짐, 추측 금지, 주석 금지, 기존 동작 보존, 빌드는 요청 시에만, 실패 시 멈춤, 파이프라인 사용 기준, worktree, 백업 파일, 인증 URL, 새 작업은 새 세션, 작업 루트, 개인 기기와 설정 보존, 다음 단계 선택지 생략, 결과 확인 장치 먼저, 참고 대상 수정 금지, 비싼 선택은 측정 후 |
 | [git-commit.md](rules/git-commit.md) | 커밋 메시지 형식과 범위, 자동 커밋 예외, force push 금지 |
 | [code-design.md](rules/code-design.md) | GoF "증상 → 패턴" 판단표, 공용 UI 정의, Kotlin/Android 기본 스타일 |
-| [security.md](rules/security.md) | 보안 감사 제안 기준, 배포 전 난독화 점검 제안(상세는 `release-obfuscation-check` 스킬), 위임 중에도 멈추는 세 가지, 첫 공개 전 점검 |
-| [cross-platform-porting.md](rules/cross-platform-porting.md) | 기준 플랫폼은 읽기 전용, 시각 스타일은 디자인 가이드 우선 |
-| [api-integration.md](rules/api-integration.md) | 사용자 동작 한 번에 요청 한 번, 연동 체크리스트 동시 갱신 |
-| [llm-features.md](rules/llm-features.md) | 앱 LLM 기능: 키 미포함 배포, 실패별 처리와 폴백 호환, 측정 후 모델 선택, 실제 요청 확인, 제약은 프롬프트로, "불가능" 응답 |
+| [security.md](rules/security.md) | 보안 감사 제안 기준, 배포 전 난독화 점검 제안(상세는 `release-obfuscation-check` 스킬), 위임 중에도 멈추는 세 가지, 첫 공개 전 점검, 배포 산출물 비밀값 금지 |
 | [agent-config.md](rules/agent-config.md) | AGENTS.md를 원본으로 두는 방식, 하네스 변경 이력, 정정 우선순위 |
 
 ### writing/
@@ -55,7 +52,6 @@ Android 개발을 하면서 Claude Code와 Codex 같은 AI 코딩 에이전트�
 | [android-log-capture](skills/android-log-capture/SKILL.md) | 외부 SDK 벤더 지원 요청용 adb 로그 수집, 요청 단위 자르기, 헤더와 요약, zip |
 | [play-vitals-query](skills/play-vitals-query/SKILL.md) | Play Developer Reporting API로 크래시, ANR, LMK 비율 조회 |
 | [release-obfuscation-check](skills/release-obfuscation-check/SKILL.md) | 배포 전 R8/Gson 난독화 점검 |
-| [android-release-build](skills/android-release-build/SKILL.md) | 서명된 release 빌드 후 서명, 버전, 크기, 16KB 정렬, 키 포함 여부 검증 |
 | [meeting-wiki](skills/meeting-wiki/SKILL.md) | 회의록을 받아 팀 위키에 결정, 미결, 주제별로 정리 |
 
 ### agents/
