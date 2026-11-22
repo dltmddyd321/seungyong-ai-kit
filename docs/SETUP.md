@@ -49,6 +49,7 @@ cd ~/seungyong-ai-kit
 | `{PROJECT_ROOT}`, `<Variant>` | Android 스킬, 에이전트 |
 | `{BASE_BRANCH}` | `commands/pr.md`, `commands/learn.md` |
 | `<OBSIDIAN_VAULT>` | `skills/dev-memo` |
+| `<WIKI_DIR>` | `skills/meeting-wiki` |
 | `<PACKAGE_NAME>`, `<QUOTA_PROJECT>` | `skills/play-vitals-query` |
 | `config.env` | `skills/translation-sheet/scripts/` (`config.example.env`를 복사해서 작성) |
 
