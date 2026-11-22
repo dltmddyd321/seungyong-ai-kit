@@ -5,7 +5,7 @@ description: Android/Kotlin 프로젝트 개발 오케스트레이터. 기능 �
 
 # Android Dev Pipeline
 
-파이프라인 구성과 배경은 `harness/android-dev/README.md`를 참고한다.
+파이프라인 구성과 배경은 `android/README.md`를 참고한다.
 프로젝트 구조, 스택, 코딩 규칙은 프로젝트 루트의 `AGENTS.md`를 기준으로 한다.
 
 ## 작업 규모 판단 (파이프라인 사용 여부)

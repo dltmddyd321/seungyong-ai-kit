@@ -15,10 +15,11 @@ cd ~/seungyong-ai-kit
 
 | 옵션 | 동작 |
 |---|---|
-| (없음) | `skills/`, `agents/`, `commands/`를 `~/.claude/` 아래에 심볼릭 링크로 연결하고, `rules/*.md`를 `~/.claude/CLAUDE.md`에 `@import` 블록으로 추가 |
+| (없음) | `skills/`, `commands/`를 `~/.claude/` 아래에 심볼릭 링크로 연결하고, `rules/*.md`를 `~/.claude/CLAUDE.md`에 `@import` 블록으로 추가 |
 | `--dry-run` | 실제로 바꾸지 않고 할 일만 출력 |
 | `--no-rules` | `CLAUDE.md`에 rules import를 넣지 않음 |
 | `--with-writing` | `writing/*.md`도 import에 추가 |
+| `--with-android` | `android/skills/`, `android/agents/`도 링크하고 `android/rules/*.md`도 import(`--codex`와 함께 쓰면 Codex 블록에도 포함) |
 | `--codex` | `rules/*.md` 내용을 `~/.codex/AGENTS.md`에 블록으로 복사 |
 | `--uninstall` | 이 저장소를 가리키는 링크와 추가한 블록을 제거 |
 
@@ -46,12 +47,12 @@ cd ~/seungyong-ai-kit
 
 | 값 | 위치 |
 |---|---|
-| `{PROJECT_ROOT}`, `<Variant>` | Android 스킬, 에이전트 |
+| `{PROJECT_ROOT}`, `<Variant>` | `android/skills`, `android/agents` |
 | `{BASE_BRANCH}` | `commands/pr.md`, `commands/learn.md` |
 | `<OBSIDIAN_VAULT>` | `skills/dev-memo` |
 | `<WIKI_DIR>` | `skills/meeting-wiki` |
-| `<PACKAGE_NAME>`, `<QUOTA_PROJECT>` | `skills/play-vitals-query` |
-| `config.env` | `skills/translation-sheet/scripts/` (`config.example.env`를 복사해서 작성) |
+| `<PACKAGE_NAME>`, `<QUOTA_PROJECT>` | `android/skills/play-vitals-query` |
+| `config.env` | `android/skills/translation-sheet/scripts/` (`config.example.env`를 복사해서 작성) |
 
 채우지 않으면 해당 스킬을 쓸 때 에이전트가 값을 묻거나 실패합니다. 링크로 연결한 파일을 직접 고치면 저장소 파일이 바뀌므로, 환경마다 값이 다르면 프로젝트의 `AGENTS.md`에 값을 적고 스킬은 그대로 두는 편이 낫습니다.
 
@@ -70,8 +71,8 @@ cd ~/seungyong-ai-kit
 
 ### 6. 프로젝트 종류
 
-- Android 하네스(`skills/android-*`, `agents/android-*`, `harness/android-dev`)는 Android/Kotlin 프로젝트에서만 의미가 있습니다. 다른 종류의 프로젝트에서는 연결되어 있어도 쓰이지 않습니다.
-- 스킬 설명(description)이 요청과 맞을 때만 에이전트가 스킬을 불러오므로, 연결해 둔다고 다른 프로젝트 작업이 방해받지는 않습니다.
+- 루트의 `rules/`, `skills/`, `commands/`는 특정 언어나 플랫폼에 묶이지 않은 범용 항목입니다.
+- `android/`는 Android/Kotlin 프로젝트에서만 의미가 있어 기본 설치에서 빠집니다. 필요한 환경에서만 `--with-android`로 설치합니다. 나중에 다른 플랫폼 전용 항목이 생기면 같은 방식으로 폴더를 나눕니다.
 
 ## 제거
 

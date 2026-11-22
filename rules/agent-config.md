@@ -10,7 +10,7 @@
 
 - 규칙, 코딩 스타일, 하네스 관련 내용을 고칠 때는 `CLAUDE.md`가 아니라 `AGENTS.md`를 고친다.
 - 브랜치에 따라 `AGENTS.md`가 없을 수 있다. 그럴 때는 있는 브랜치에서 `git show <branch>:AGENTS.md`로 가져오거나, 현재 `CLAUDE.md` 내용을 기반으로 새로 만든다.
-- 템플릿: `templates/AGENTS.md`, `templates/CLAUDE.md`
+- 템플릿 예시: `android/templates/AGENTS.md`, `android/templates/CLAUDE.md`
 
 **Why:** Codex 등 다른 벤더 에이전트는 `CLAUDE.md`가 아니라 `AGENTS.md`를 읽는다. 처음에는 두 파일을 손으로 똑같이 유지했는데, Claude Code의 `@path` import 문법으로 `CLAUDE.md`를 한 줄로 바꾸면 동기화할 필요 자체가 없어진다.
 

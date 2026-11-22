@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail
+shopt -s nullglob
 
 KIT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CLAUDE_DIR="${CLAUDE_DIR:-$HOME/.claude}"
@@ -11,6 +12,7 @@ DRY_RUN=0
 WITH_RULES=1
 WITH_WRITING=0
 WITH_CODEX=0
+WITH_ANDROID=0
 UNINSTALL=0
 
 usage() {
@@ -18,14 +20,16 @@ usage() {
 사용법: ./install.sh [옵션]
 
 기본 동작
-  skills/, agents/, commands/를 ${CLAUDE_DIR} 아래에 심볼릭 링크로 연결하고
+  skills/, commands/를 ${CLAUDE_DIR} 아래에 심볼릭 링크로 연결하고
   rules/*.md를 ${CLAUDE_DIR}/CLAUDE.md에 @import 블록으로 추가합니다.
+  android/ 아래 항목은 --with-android일 때만 설치합니다.
   같은 이름이 이미 있으면 덮어쓰지 않고 건너뜁니다.
 
 옵션
   --dry-run       실제로 바꾸지 않고 할 일만 출력
   --no-rules      CLAUDE.md에 rules import를 넣지 않음
   --with-writing  writing/*.md도 CLAUDE.md import에 추가
+  --with-android  android/skills, android/agents 링크 + android/rules/*.md import
   --codex         rules/*.md 내용을 ${CODEX_DIR}/AGENTS.md에 블록으로 복사
   --uninstall     이 저장소를 가리키는 링크와 추가한 블록을 제거
   -h, --help      도움말
@@ -37,6 +41,7 @@ for arg in "$@"; do
     --dry-run) DRY_RUN=1 ;;
     --no-rules) WITH_RULES=0 ;;
     --with-writing) WITH_WRITING=1 ;;
+    --with-android) WITH_ANDROID=1 ;;
     --codex) WITH_CODEX=1 ;;
     --uninstall) UNINSTALL=1 ;;
     -h|--help) usage; exit 0 ;;
@@ -149,13 +154,20 @@ claude_import_block() {
   if [ "$WITH_WRITING" -eq 1 ]; then
     for f in "$KIT"/writing/*.md; do lines+="@$f"$'\n'; done
   fi
+  if [ "$WITH_ANDROID" -eq 1 ]; then
+    for f in "$KIT"/android/rules/*.md; do lines+="@$f"$'\n'; done
+  fi
   printf '%s' "${lines%$'\n'}"
 }
 
 codex_block() {
   local f
   local first=1
-  for f in "$KIT"/rules/*.md; do
+  local files=("$KIT"/rules/*.md)
+  if [ "$WITH_ANDROID" -eq 1 ]; then
+    files+=("$KIT"/android/rules/*.md)
+  fi
+  for f in "${files[@]}"; do
     [ "$first" -eq 1 ] || printf '\n'
     first=0
     cat "$f"
@@ -194,7 +206,12 @@ for item in "$KIT"/skills/*/; do link_item "$item" "$CLAUDE_DIR/skills"; done
 for item in "$KIT"/agents/*.md; do link_item "$item" "$CLAUDE_DIR/agents"; done
 for item in "$KIT"/commands/*.md; do link_item "$item" "$CLAUDE_DIR/commands"; done
 
-if [ "$WITH_RULES" -eq 1 ] || [ "$WITH_WRITING" -eq 1 ]; then
+if [ "$WITH_ANDROID" -eq 1 ]; then
+  for item in "$KIT"/android/skills/*/; do link_item "$item" "$CLAUDE_DIR/skills"; done
+  for item in "$KIT"/android/agents/*.md; do link_item "$item" "$CLAUDE_DIR/agents"; done
+fi
+
+if [ "$WITH_RULES" -eq 1 ] || [ "$WITH_WRITING" -eq 1 ] || [ "$WITH_ANDROID" -eq 1 ]; then
   write_block "$CLAUDE_DIR/CLAUDE.md" "$(claude_import_block)"
 fi
 

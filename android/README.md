@@ -1,4 +1,16 @@
-# Android Dev 하네스
+# Android 전용 모음
+
+Android/Kotlin 프로젝트에서만 의미가 있는 규칙, 스킬, 에이전트, 노트, 템플릿을 모은 폴더다. 저장소 루트의 범용 항목과 분리해 두었고, `./install.sh --with-android`일 때만 설치된다.
+
+| 폴더 | 내용 |
+|---|---|
+| `rules/` | Kotlin/Android 규칙(GoF 관용 표현, 기본 스타일, 보안 감사 대상, R8 점검) |
+| `skills/` | android-dev, android-test, android-api-task, android-log-capture, figma-implement, translation-sheet, play-vitals-query, release-obfuscation-check |
+| `agents/` | Android Dev 파이프라인 서브에이전트 5개 |
+| `notes/` | 짧은 Android 기술 노트 |
+| `templates/` | Android 프로젝트용 `AGENTS.md`/`CLAUDE.md` |
+
+## Android Dev 하네스
 
 Android/Kotlin 프로젝트에서 AI 에이전트가 코드를 바꾸고 테스트를 붙이는 방식을 고정한 구성이다. 스킬 2개(오케스트레이터), 서브에이전트 5개, 보조 스킬과 명령, 훅으로 이뤄진다.
 
@@ -11,21 +23,21 @@ Android/Kotlin 프로젝트에서 AI 에이전트가 코드를 바꾸고 테스�
 
 | 종류 | 파일 | 역할 |
 |---|---|---|
-| 스킬 | `skills/android-dev/SKILL.md` | 코드 변경 오케스트레이터. 규모 판단 후 직접 처리 또는 4단계 파이프라인 |
-| 스킬 | `skills/android-test/SKILL.md` | 테스트 오케스트레이터. 요구사항 → 시나리오 승인 → Red → Green |
-| 에이전트 | `agents/android-explorer.md` | 관련 코드와 수정 지점 탐색 |
-| 에이전트 | `agents/android-implementer.md` | 탐색 결과로 구현 |
-| 에이전트 | `agents/android-build-verifier.md` | 컴파일 → lint → 단위 테스트. 실패 시 고치지 않고 보고 |
-| 에이전트 | `agents/android-reviewer.md` | Critical/High/Medium 기준 리뷰 |
-| 에이전트 | `agents/android-test-writer.md` | 승인된 시나리오만으로 테스트 작성. 실행하지 않음 |
+| 스킬 | `android/skills/android-dev/SKILL.md` | 코드 변경 오케스트레이터. 규모 판단 후 직접 처리 또는 4단계 파이프라인 |
+| 스킬 | `android/skills/android-test/SKILL.md` | 테스트 오케스트레이터. 요구사항 → 시나리오 승인 → Red → Green |
+| 에이전트 | `android/agents/android-explorer.md` | 관련 코드와 수정 지점 탐색 |
+| 에이전트 | `android/agents/android-implementer.md` | 탐색 결과로 구현 |
+| 에이전트 | `android/agents/android-build-verifier.md` | 컴파일 → lint → 단위 테스트. 실패 시 고치지 않고 보고 |
+| 에이전트 | `android/agents/android-reviewer.md` | Critical/High/Medium 기준 리뷰 |
+| 에이전트 | `android/agents/android-test-writer.md` | 승인된 시나리오만으로 테스트 작성. 실행하지 않음 |
 | 스킬 | `skills/commit-message/SKILL.md` | 작업 끝에 커밋 메시지 텍스트 제공 |
-| 스킬 | `skills/translation-sheet/SKILL.md` | 번역 시트를 `strings.xml` 로케일별로 반영 |
-| 스킬 | `skills/figma-implement/SKILL.md` | Figma 스펙을 추측 없이 코드로 반영 |
+| 스킬 | `android/skills/translation-sheet/SKILL.md` | 번역 시트를 `strings.xml` 로케일별로 반영 |
+| 스킬 | `android/skills/figma-implement/SKILL.md` | Figma 스펙을 추측 없이 코드로 반영 |
 | 명령 | `commands/issue.md` | 이슈 URL + 제목 → 브랜치 생성, 커밋 첫 줄 고정 |
 | 명령 | `commands/pr.md` | 현재 브랜치로 PR 생성 |
 | 명령 | `commands/learn.md` | 작업에서 배운 패턴을 스킬에 추가 |
 | 훅 | `hooks/check-claude-agents-sync.sh` | `CLAUDE.md`/`AGENTS.md` 미러링 어긋남 감지 |
-| 템플릿 | `templates/AGENTS.md`, `templates/CLAUDE.md` | 프로젝트 규칙 파일 뼈대 |
+| 템플릿 | `android/templates/AGENTS.md`, `android/templates/CLAUDE.md` | 프로젝트 규칙 파일 뼈대 |
 
 ## 코드 변경 파이프라인 (`android-dev`)
 
@@ -92,10 +104,10 @@ KIT=~/path/to/this-repo
 PROJECT=~/path/to/android-project
 
 mkdir -p "$PROJECT/.claude/skills" "$PROJECT/.claude/agents" "$PROJECT/.claude/commands" "$PROJECT/.claude/hooks"
-cp -r "$KIT/skills/android-dev" "$KIT/skills/android-test" "$KIT/skills/commit-message" "$PROJECT/.claude/skills/"
-cp "$KIT"/agents/android-*.md "$PROJECT/.claude/agents/"
+cp -r "$KIT/android/skills/android-dev" "$KIT/android/skills/android-test" "$KIT/skills/commit-message" "$PROJECT/.claude/skills/"
+cp "$KIT"/android/agents/android-*.md "$PROJECT/.claude/agents/"
 cp "$KIT"/commands/*.md "$PROJECT/.claude/commands/"
-cp "$KIT/templates/AGENTS.md" "$KIT/templates/CLAUDE.md" "$PROJECT/"
+cp "$KIT/android/templates/AGENTS.md" "$KIT/android/templates/CLAUDE.md" "$PROJECT/"
 ```
 
 설치 후 바꿀 것:
@@ -103,7 +115,7 @@ cp "$KIT/templates/AGENTS.md" "$KIT/templates/CLAUDE.md" "$PROJECT/"
 - `commands/pr.md`, `commands/learn.md`의 `{BASE_BRANCH}`
 - `AGENTS.md`의 스택, 디렉터리, 코딩 스타일 placeholder
 
-브랜치와 무관하게 쓰는 `translation-sheet`, `figma-implement`는 개인 전역 `~/.claude/skills/`에 두는 편이 낫다.
+프로젝트에 복사하지 않고 개인 전역으로 쓰려면 저장소 루트에서 `./install.sh --with-android`를 실행한다. `android/` 아래 스킬과 에이전트가 `~/.claude/`에 연결되고 `android/rules/`가 import된다.
 
 ## 하네스를 바꿀 때
 

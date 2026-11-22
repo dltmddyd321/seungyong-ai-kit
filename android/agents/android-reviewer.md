@@ -32,7 +32,7 @@ model: opus
 - 중첩 4단계 초과
 - 의미가 불명확한 변수명
 
-구조가 이상하다고 느껴지면 `rules/code-design.md`의 "증상 → 패턴" 표로 진단한다.
+구조가 이상하다고 느껴지면 `rules/code-design.md`의 "증상 → 패턴" 표와 `android/rules/kotlin-android.md` 1번 대응표로 진단한다.
 
 ## 출력 형식
 
